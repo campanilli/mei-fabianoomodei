@@ -1220,7 +1220,7 @@
                         </div>
                         <div class="contact-details">
                             <h4>E-mail</h4>
-                            <p>fabiano.omodei@portoseguro.com.br</p>
+                            <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d6b0b7b4bfb7b8b9f8b9bbb9b2b3bf96a6b9a4a2b9a5b3b1a3a4b9f8b5b9bbf8b4a4">[email&#160;protected]</a></p>
                         </div>
                     </div>
                     
@@ -1339,7 +1339,7 @@
         </svg>
     </a>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Menu Mobile
         const menuToggle = document.getElementById('menuToggle');
         const navLinks = document.getElementById('navLinks');
@@ -1399,32 +1399,35 @@
         window.addEventListener('scroll', revealOnScroll);
         revealOnScroll(); // Initial check
         
-        // Form Submission
+        // Form Submission - Redirecionar para WhatsApp
         const contactForm = document.getElementById('contactForm');
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
             
-            const formData = new FormData(contactForm);
-            const data = Object.fromEntries(formData);
+            // Coletar dados do formulário
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const interest = document.getElementById('interest').value;
+            const message = document.getElementById('message').value;
             
-            // Aqui você integraria com Formspree ou outro backend
-            // Exemplo com Formspree:
-            // fetch('https://formspree.io/f/seu-id-aqui', {
-            fetch('https://formspree.io/f/xrbparzk', {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            }).then(response => {
-                if (response.ok) {
-                    alert('Mensagem enviada com sucesso! Entrarei em contato em breve.');
-                    contactForm.reset();
-                }
-            });
+            // Montar mensagem para WhatsApp
+            let whatsappMessage = `Olá! Meu nome é *${name}*\n\n`;
+            whatsappMessage += `📧 Email: ${email}\n`;
+            whatsappMessage += `📱 Telefone: ${phone}\n`;
+            whatsappMessage += `🎯 Interesse: ${interest}\n\n`;
+            whatsappMessage += `💬 Mensagem:\n${message}`;
             
-            // Simulação temporária
-            alert('Mensagem enviada com sucesso! Entrarei em contato em breve.');
+            // Codificar mensagem para URL
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            
+            // Número do WhatsApp (mesmo do botão flutuante)
+            const whatsappNumber = '5511980592121';
+            
+            // Abrir WhatsApp em nova aba
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+            
+            // Resetar formulário após envio
             contactForm.reset();
         });
         
