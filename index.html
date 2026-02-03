@@ -1401,48 +1401,32 @@
         
         // Form Submission - Redirecionar para WhatsApp
         const contactForm = document.getElementById('contactForm');
-        if (contactForm) {
-            contactForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Coletar dados do formulário
-                const name = document.getElementById('name').value.trim();
-                const email = document.getElementById('email').value.trim();
-                const phone = document.getElementById('phone').value.trim();
-                const interest = document.getElementById('interest').value;
-                const message = document.getElementById('message').value.trim();
-                
-                // Validação básica
-                if (!name || !email || !phone || !message) {
-                    alert('Por favor, preencha todos os campos obrigatórios.');
-                    return;
-                }
-                
-                // Montar mensagem para WhatsApp
-                let whatsappMessage = 'Olá! Meu nome é *' + name + '*\n\n';
-                whatsappMessage += '📧 Email: ' + email + '\n';
-                whatsappMessage += '📱 Telefone: ' + phone + '\n';
-                whatsappMessage += '🎯 Interesse: ' + interest + '\n\n';
-                whatsappMessage += '💬 Mensagem:\n' + message;
-                
-                // Codificar mensagem para URL
-                const encodedMessage = encodeURIComponent(whatsappMessage);
-                
-                // Número do WhatsApp
-                const whatsappNumber = '5511980592121';
-                
-                // Criar URL do WhatsApp
-                const whatsappURL = 'https://wa.me/' + whatsappNumber + '?text=' + encodedMessage;
-                
-                // Abrir WhatsApp
-                window.open(whatsappURL, '_blank');
-                
-                // Resetar formulário após pequeno delay
-                setTimeout(function() {
-                    contactForm.reset();
-                }, 500);
-            });
-        }
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(contactForm);
+            const nome = formData.get('name');
+            const email = formData.get('email');
+            const telefone = formData.get('phone');
+            const servico = formData.get('service');
+            const mensagem = formData.get('message');
+            
+            // WhatsApp integration
+            const whatsappMessage = `Olá Fabiano! Meu nome é ${nome}.%0A%0A` +
+                `📧 Email: ${email}%0A` +
+                `📱 Telefone: ${telefone}%0A` +
+                `🎯 Interesse: ${servico}%0A%0A` +
+                `Mensagem: ${mensagem || 'Gostaria de agendar uma sessão de coaching!'}`;
+            
+            window.open(`https://wa.me/5511980592121?text=${whatsappMessage}`, '_blank');
+            
+            // Reset form
+            contactForm.reset();
+            
+            // Show success message
+            alert('Mensagem enviada! Você será redirecionado para o WhatsApp.');
+        });
         
         // Telefone Mask
         const phoneInput = document.getElementById('phone');
