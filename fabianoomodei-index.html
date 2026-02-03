@@ -621,6 +621,15 @@
             margin: 0;
         }
         
+        .contact-details a {
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        .contact-details a:hover {
+            opacity: 1;
+        }
+        
         .contact-form {
             background: var(--white);
             padding: 2.5rem;
@@ -1414,9 +1423,9 @@
             
             // WhatsApp integration
             const whatsappMessage = `Olá Fabiano! Meu nome é ${nome}.%0A%0A` +
-                `Email: ${email}%0A` +
-                `Telefone: ${telefone}%0A` +
-                `Interesse: ${servico}%0A%0A` +
+                `📧 Email: ${email}%0A` +
+                `📱 Telefone: ${telefone}%0A` +
+                `🎯 Interesse: ${servico}%0A%0A` +
                 `Mensagem: ${mensagem || 'Gostaria de agendar uma sessão de coaching!'}`;
             
             window.open(`https://wa.me/5511980592121?text=${whatsappMessage}`, '_blank');
